@@ -1,0 +1,149 @@
+Record Class: friend of Table Class
+
+	Record(size_t size)
+		PARAMETERS
+			size_t size: Number of default entries in record
+
+	size_t numEntries() const
+		RETURN
+			size_t: Returns number of entries in record that are not empty
+
+	void setEntry(size_t index, std::string entry)
+		PARAMETERS
+			size_t index: Index in a record at which a new entry will be inserted
+			std::string entry: The value of the new entry being inserted into the proper index within the record
+			
+	std::string getEntry(size_t index) const
+		PARAMETERS
+			size_t index: Index in a record at which its correspondent value will be retrieved
+		RETURN
+			std::string: The string value found at its respective index
+	
+	void printRecord() const
+		Iterates through the entries of the record and prints each one out
+
+Table Class: friend of Record class
+
+	Table()
+		Default constructor
+		
+	Table(std::string attributes)
+		PARAMETERS
+			std::string attributes: Initialize table with attributes listed in a comma separated string. Ex. Table("ID, First name, Last name")
+
+	void addAttribute(std::string attribute)
+		PARAMETERS
+			std::string attribute: Name of new attribute user is adding to table
+		ERROR CHECKING
+			If attribute already exists, the attribute will not be added again.
+
+	void deleteAttribute(std::string attribute)
+		PARAMETERS
+			std::string attribute: Name of attribute user is trying to delete
+		ERROR CHECKING
+			If attribute does not exist, an error message will be displayed.
+
+	void addRecord(Record tableRecord)
+		PARAMETERS
+			Record tableRecord: Record object that user is adding to table
+		ERROR CHECKING
+			If a key is defined, a record will not be added if it contains a duplicated key.
+
+	std::vector<std::string> getAttributes() const
+		RETURN
+			std::vector<std::string>: Return a vector that holds the attribute strings
+
+	size_t getNumRecords() const
+		RETURN
+			size_t: Return the number of records in a table
+
+	std::vector<Record>::iterator recordIterator(int index)
+		PARAMETERS
+			int index: Index of element user is trying to iterate to
+		RETURN
+			std::vector<Record>::iterator: Returns an iterator to the Record user is trying to access
+		ERROR CHECKING
+			Returns iterator to end of the record vector if a record with specified index does not exist.
+
+	void addKey(std::string primaryKey)
+		PARAMETERS
+			std::string primaryKey: Name of attribute user would like as primary key (ie this attribute can have no duplicate entries)
+		ERROR CHECKING
+			Checks to make sure none of the records have a duplicate entry for the key. If they do, it will print the records with duplicated key entires that need to be resolved before the key can be added.
+
+	Table crossJoinTables(Table otherTable)
+		PARAMETERS
+			Table otherTable: Table object that will be cross joined with current table
+		RETURN
+			Table: Returns Table that is a cross join of current table and passed in table. 
+
+	Table naturalJoinTables(Table otherTable)
+		PARAMETERS
+			Table otherTable: Table object that will be joined with current table
+		RETURN
+			Table: Returns Table that is a natural join of current table and passed in table. 
+
+	size_t numRecordsWithAttributes(std::string attribute)
+		PARAMETERS
+			std::string attribute: Name of attribute user would like to search for located in table.
+		RETURN
+			size_t: Returns number of records containing a non-empty value for the desired attribute
+		ERROR CHECKING
+			Print an error message if the attribute does not exist
+
+	std::string minEntryOfAttribute(std::string attribute)
+		PARAMETERS
+			std::string attribute: Name of attribute user would like to search for in table
+		RETURN
+			std::string: Returns the minimum entry value with a specified attribute
+		ERROR CHECKING
+			Print an error message if the attribute does not exist
+
+	std::string maxEntryOfAttribute(std::string attribute)
+		PARAMETERS
+			std::string attribute: Name of attribute user would like to search for in table
+		RETURN
+			std::string:Returns the maximum entry value with a specified attribute
+		ERROR CHECKING
+			Print an error message if the attribute does not exist
+	
+	void printTable()
+		Iterates through the records of the table and prints each one out
+
+
+Database Class
+
+	Database()
+		Constructor
+	
+	void addTable(Table table, std::string tableName)
+		PARAMETERS
+			Table table: Table object user wants to include in database
+			std::string tableName: A name to associate with the table object
+		ERROR CHECKING
+			If a table already exists with the specified name, an error message will be displayed
+
+	void deleteTable(std::string tableName)
+		PARAMETERS
+			std::string tableName: Delete table with name 'tablename'
+		ERROR CHECKING
+			If a table with the specified name does not exist, an error message will be displayed
+
+	std::vector<std::string> getTableNames() const
+		RETURN
+			std::vector<std::string>: Returns a vector containing all of the table names
+			
+	std::vector<Table> getTables() const
+		RETURN
+			std::vector<Table>: Returns a vector containing all of the tables
+
+	Table query (std::string selectArg, std::string fromArg, std::string whereArg)
+		PARAMETERS
+			std::string selectArg: List of arguemennts to be kept in a comma separated string. If all arguements are to be kept, use "*".
+			std::string fromArg: Table name that the query should pull from
+			std::string whereArg: String of commands that specify what the query should perform
+		RETURN
+			Table: Returns a table that contains the results of the queries
+	
+	void printDatabase()
+		Iterates through the tables of the database and prints each one out
